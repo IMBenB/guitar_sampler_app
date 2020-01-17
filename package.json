@@ -1,7 +1,7 @@
 {
   "name": "server2",
   "version": "1.0.0",
-  "description": "",
+  "description": "please use \r user Name:DEMO\r password:DEMO",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -14,5 +14,14 @@
     "cors": "^2.8.5",
     "mongoose": "^5.8.3",
     "express": "4.17.1"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IMBenB/guitar_sampler_app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/IMBenB/guitar_sampler_app/issues"
+  },
+  "homepage": "https://github.com/IMBenB/guitar_sampler_app#readme"
 }
