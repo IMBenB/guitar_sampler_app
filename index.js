@@ -1,14 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require('cors')
 
 const app = express();
-
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
-
+app.use(cors());
 
 
 
@@ -25,22 +25,25 @@ const Schema = mongoose.Schema;
 const userSampleSchema = new Schema({
     name: String,
     latitude: Number,
-    longitude: Number
+    longitude: Number,
+    date: String,
+    time: String
 });
 
 app.post('/addData', (req, res) => {
     console.log('ben')
-    let name = 'ben';
+    let name = req.body['user'];
     let latitude = req.body['latitude']
     let longitude = req.body['longitude']
-    console.log(req.body['longitude'])
+    let date = req.body['date']
+    let time = req.body['time']
     mongoose.connect(url, { useNewUrlParser: true });
     mongoose.set('useUnifiedTopology', true);
 
 
     const samplesModel = mongoose.model('guitar samples', userSampleSchema);
 
-    const sampleDetails = new samplesModel({ name: `${name}`, latitude: `${latitude}`, longitude: `${longitude}` });
+    const sampleDetails = new samplesModel({ name: `${name}`, latitude: `${latitude}`, longitude: `${longitude}`, date:`${date}`,time:`${time}` });
 
 
     sampleDetails.save().then(doc => {
@@ -89,13 +92,38 @@ app.post('/getData', (req, res) => {
 
         samplesModel.find({})
             .then(doc => {
-                console.log(doc);
-                let docObj ={ doc, isOK:true};
+                // console.log(doc);
+                let docObj = { doc, isOK: true };
                 res.send(docObj);
             })
-            
+
     } catch (err) {
-        res.send({isOK:false, error:err})
+        res.send({ isOK: false, error: err })
+        console.log(err)
+    }
+
+
+})
+
+app.post('/deleteData', (req, res) => {
+
+    try {
+
+        mongoose.connect(url, { useNewUrlParser: true });
+        mongoose.set('useUnifiedTopology', true);
+
+        const samplesModel = mongoose.model('guitar samples', userSampleSchema);
+
+
+        samplesModel.deleteMany({})
+            .then(doc => {
+                // console.log(doc);
+                let docObj = { doc, isOK: true };
+                res.send(docObj);
+            })
+
+    } catch (err) {
+        res.send({ isOK: false, error: err })
         console.log(err)
     }
 

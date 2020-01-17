@@ -1,1 +1,3 @@
-# guitar_sampler_app
+please use 
+user Name:DEMO
+password:DEMO
